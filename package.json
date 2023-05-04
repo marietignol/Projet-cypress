@@ -19,5 +19,8 @@
   "homepage": "https://github.com/VirginieT/dojo_cypress#readme",
   "dependencies": {
     "cypress": "^12.11.0"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^7.6.0"
   }
 }
