@@ -6,7 +6,7 @@ describe('purchase of an article', () => {
   // mettre un article dans le panier
   beforeEach(() => {
     cy.visit('https://magento.softwaretestingboard.com/')
-    cy.get('#ui-id-4 > :nth-child(2)').click() // page women
+    cy.get('#ui-id-4').click() // page women
     cy.get('dd > .items > :nth-child(1) > a').click() // page tops 50
     cy.get(
       ':nth-child(1) > .product-item-info > .photo > .product-image-container > .product-image-wrapper > .product-image-photo'
@@ -24,9 +24,10 @@ describe('purchase of an article', () => {
       'include',
       'https://magento.softwaretestingboard.com/checkout'
     )
+    cy.wait(3000)
     cy.get('#shipping').should('be.visible')
   })
-  it('fills out the shipping form', () => {
+  it('fills out the shipping and billing forms', () => {
     cy.visit('https://magento.softwaretestingboard.com/checkout#shipping')
     cy.get(
       '#customer-email-fieldset > .required > .control > #customer-email'
@@ -38,5 +39,24 @@ describe('purchase of an article', () => {
     cy.get('[name="street[1]"]').type(faker.address.streetAddress())
     cy.get('[name="street[2]"]').type(faker.address.streetAddress())
     cy.get('[name="city"]').type(faker.address.city())
+    cy.get('[name="region_id"]').select('Rhode Island')
+    cy.get('[name="postcode"]').type(faker.address.zipCode())
+    cy.get('[name="telephone"]').type(faker.phone.phoneNumber())
+    cy.get(':nth-child(1) > :nth-child(1) > .radio').check()
+    cy.get('.button > span').click()
+    cy.get('#billing-address-same-as-shipping-checkmo').uncheck()
+    cy.wait(2000)
+    cy.get('[name="firstname"]').type(faker.name.firstName())
+    cy.get('[name="lastname"]').type(faker.name.lastName())
+    cy.get('[name="company"]').type(faker.company.name())
+    cy.get('[name="street[0]"]').type(faker.address.streetAddress())
+    cy.get('[name="street[1]"]').type(faker.address.streetAddress())
+    cy.get('[name="street[2]"]').type(faker.address.streetAddress())
+    cy.get('[name="city"]').type(faker.address.city())
+    cy.get('[name="region_id"]').select('Rhode Island')
+    cy.get('[name="postcode"]').type(faker.address.zipCode())
+    cy.get('[name="telephone"]').type(faker.phone.phoneNumber())
+    cy.get('.action-update > span').click()
+    cy.get('.payment-method-content > :nth-child(4) > div.primary').click()
   })
 })
