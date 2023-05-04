@@ -1,10 +1,3 @@
-
-
-
-
-
-
-
 //! VIRGINIE
 
 describe('View Cart', () => {
@@ -38,7 +31,11 @@ describe('View Cart', () => {
     cy.get('.action.showcart').click()
     cy.get('a.viewcart').click()
     cy.url().should('include', '/cart/')
-    cy.get('.control.qty span.label:contains("Qty")').click({force: true}).siblings('input').clear().type('2') 
+    cy.get('.control.qty span.label:contains("Qty")')
+      .click({ force: true })
+      .siblings('input')
+      .clear()
+      .type('2')
     cy.screenshot()
   })
 })
